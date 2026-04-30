@@ -4,7 +4,12 @@ import { createAuthorizationUrl } from '@atcute/oauth-browser-client';
 import { XRPC } from '@atcute/client';
 import { OAuthUserAgent, finalizeAuthorization, getSession } from '@atcute/oauth-browser-client';
 
-const APP_URL="https://bsky-oauth-example.jvns.ca"
+const APP_URL = (
+	typeof window !== 'undefined' && window.APP_URL ? window.APP_URL :
+	typeof process !== 'undefined' && process.env && process.env.APP_URL ? process.env.APP_URL :
+	typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.APP_URL ? import.meta.env.APP_URL :
+	(location.origin || 'https://bsky-oauth-example.jvns.ca')
+);
 
 configureOAuth({
 	metadata: {
